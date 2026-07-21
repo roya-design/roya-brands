@@ -183,7 +183,16 @@ body {
   background: var(--bg-color);
   transition: var(--transition);
 }
+html:not(.light) .brand-box-container ul .brand-form p,
+html:not(.light) .brand-box-container .brand-letter-group .headline-letter {
+    color: #fff;
+    opacity: .7;
+}
 
+html:not(.light) .brands .filter-group .button-wrapper a:hover,
+html:not(.light) .brands .filter-group .button-wrapper a.active {
+    background: #808080;
+}
 .theme-switch {
   display: flex;
   justify-content: center;
