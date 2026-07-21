@@ -1,1 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0">
+		<link rel="shortcut icon" type="image/x-icon" href="https://admin.roya.com/views/assets/app-icons/roya/favicon-32x32.png">
+		<title>Brands V3 </title>
+		<meta name="description" content="Eye Care <span>Optical Clinic</span> provides the highest quality of optometry care services in San Diego, CA and the nearby communities. Call (123) 456-7890 today!">
+		<meta name="keywords" content="">
+    
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/common-global.css" rel="stylesheet" type="text/css">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/site-overrides.css?jxl141305588=jxl141305588" rel="stylesheet" type="text/css">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/css/pages/WebPage-ac5a47cc-f75f-4e72-b1b9-8d40e9bbf485.css?jxl141305588=jxl141305588" rel="stylesheet" type="text/css">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/default.css" rel="stylesheet">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/site.css" rel="stylesheet">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/color_scheme_1.css" rel="stylesheet">
+		<link href="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/styles/overrides.css" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+      body, html, body div, body p, body .search-result, body .description, .ry-form label, .ry-table .ry-row .ry-td:first-child .ry-lbl, .ry-list-wrp .ry-list-item .ry-list-content .ry-list-excerpt, #menu_container .mm-listview .mob-menu a, .mm-panel .mob-menu a {
+        font-family: Inter !important;
+      }
+      #ProgressLoading {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background: #f1f1f1;
+          z-index: 1000;
+      }
+
+        #loadingProgress {
+            width: 100%;
+            height: 10px;
+        }
+
+        #progressText {
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+
+        #ProgressLoading {
+            position: fixed;
+            top: 65%;
+            transform: translate(0, -50%);
+            z-index: 999999;
+            background: transparent;
+        }
+
+        #ProgressLoading #progressText {
+            text-align: center;
+            color: #000;
+            font-size: 50px;
+            margin: 0;
+            display: none;
+        }
+
+        #loadingProgress {
+            opacity: 0;
+            height: 0;
+        }
+
+        body:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/waitgif.gif);
+            width: 200px;
+            height: 153px;
+            transition: .3s;
+        }
+
+        body.progress-20:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_25.gif);
+            height: 200px;
+            width: 188px;
+        }
+
+        body.progress-40:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_50gif.gif);
+            width: 200px;
+            height: 200px;
+        }
+        body.progress-60:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/80cat.gif);
+            width: 250px;
+            height: 227px;
+        }
+
+        body.progress-80:not(.activated):after {
+          background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
+            width: 250px;
+            height: 220px;
+            background-size: cover;
+        }
+        body.progress-90:not(.activated):after {
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
+            width: 250px;
+            height: 220px;
+            background-size: cover;
+        }
+
+        .brand-box-container.animated-wait:before, 
+        .brand-box-container.animated-wait:after {
+            display: none;
+        }
+        .customProgress {
+            max-width: 320px;
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+            border-radius: 30px;
+            height: 20px;
+            background: #dddddd;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .customProgress #loadingwidth {
+            background: #fff;
+            top: 50%;
+            border-radius: 15px;
+            background: #fba48a;
+            height: 100%;
+            border: unset;
+            transition: 1s;
+        }
+
+        #loadingProgress {
+            visibility: hidden;
+            display: none;
+        }
+        .customProgress span {
+    position: absolute;
+    bottom: -50px;
+    font-size: 16px;
+    text-align: center;
+    min-width: 420px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: #333;
+    font-family: 'Inter';
+    font-weight: 300;
+}
+
+.dark .customProgress span {
+    color: #e4e6eb;
+}
+        body{
+  --bg-color: #fff;
+  --text-color: #18191a;
+  --switch-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1) inset;
+  --transition: all 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.dark body {
+  --bg-color: #18191a;
+  --text-color: #e4e6eb;
+  --switch-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.5) inset;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg-color: #18191a;
+    --text-color: #e4e6eb;
+    --switch-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.5) inset;
+  }
+  .light body {
+    --bg-color: #fff;
+    --text-color: #18191a;
+    --switch-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1) inset;
+  }
+}
+
+body {
+
+  background: var(--bg-color);
+  transition: var(--transition);
+}
+
+.theme-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-switch .checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.theme-switch .label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 50px;
+  position: relative;
+  height: 40px;
+  width: 80px;
+  cursor: pointer;
+  box-shadow: var(--switch-shadow);
+  transition: var(--transition);
+}
+
+.theme-switch .label:hover .moon,
+.theme-switch .label:hover .sun {
+  transform: rotate(360deg);
+}
+
+.theme-switch .ball {
+  transition: var(--transition);
+  background-color: var(--text-color);
+  position: absolute;
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+  height: 30px;
+  width: 30px;
+ }
+
+.theme-switch .moon {
+  color: #f1c40f;
+  transform-origin: center center;
+  transition: all 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: rotate(0);
+}
+
+.theme-switch .sun {
+  color: #ff6b00;
+  transform-origin: center center;
+  transition: all 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: rotate(0);
+}
+
+.theme-switch .ball {
+  transform: translatex(0);
+}
+
+.dark .theme-switch .ball {
+  transform: translatex(40px);
+}
+
+.theme-switch {
+    position: fixed;
+    z-index: 9999999;
+    top: 50%;
+    right: -1%;
+    transform: rotate(-90deg) translate(0, -50%);
+}
+
+.dark .brand-box-container ul .brand-form p {
+    color: #b0b3b8;
+}
+
+.dark .search-wrapper .search {
+    background: #3a3b3c;
+    border-color: #3a3b3c;
+    color: #e4e6eb;
+}
+
+.dark .search-wrapper svg {
+    fill: #e4e6eb;
+}
+
+.dark .brand-container .ry-flex .brand-text {
+    background: #3a3b3c;
+}
+
+.dark .brand-container .ry-flex .brand-text .ry-text p {
+    color: #e4e6eb;
+}
+
+.dark .brand-container .ry-flex .brand-text .ry-text .button-download {
+    background: #e4e6eb;
+    color: #18191a;
+}
+
+.brand-container .ry-flex .brand-text .ry-text p {
+    font-size: 18px;
+}
+
+.brand-container .ry-flex .brand-text .ry-text .button-download {
+    font-size: 16px;
+}
+
+.dark .brand-box-container .brand-letter-group .headline-letter {
+    color:  #e4e6eb;
+}
+
+.dark .brands .filter-group .button-wrapper a {
+    background: #e4e6eb;
+    border-color: #e4e6eb;
+}
+
+.dark .brands .filter-group .button-wrapper a:hover, 
+.dark .brands .filter-group .button-wrapper a.active {
+    background: #3a3b3c;
+    border-color: #3a3b3c;
+    color: #e4e6eb;
+}
+
+.dark .clear-all-check,
+.dark .select-all-check  {
+    color: #e4e6eb;
+}
+.dark .clear-all-check svg,
+.dark .select-all-check svg {
+    fill: #e4e6eb;
+}
+
+.dark .brand-box-container .each-brand .brand-image-hover {
+    background: #e4e6eb;
+}
+
+.dark .brand-box-container .each-brand .brand-image-hover:before {
+    border-left: 10px solid #e4e6eb;
+}
+
+.dark body:not(.activated):before {
+    background:  #18191a;
+}
+
+.dark .brand-box-container .copy-clip span {
+    fill: #e4e6eb;
+}
+
+.dark .theme-switch .label {
+    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.2);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.2);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.2);
+}
+
+.dark .copied-toast {
+    background: #3a3b3c;
+}
+
+.dark .copied-toast:after {
+    border-top: 5px solid #3a3b3c;
+}
+
+.dark .brand-box-container ul .brand-form .copy-clip svg {
+    fill: #e4e6eb;
+}
+.dark .brands .filter-group.fixed {
+    background: #18191a;
+}
+@media (prefers-color-scheme: dark) {
+  .theme-switch .ball {
+    transform: translatex(40px);
+  }
+
+  .light .theme-switch .ball {
+    transform: translatex(0);
+  }
+}
+    </style>
+		</head>
+
+	<body class="default" id="brandDefault">
+    <div class="theme-switch">
+      <input type="checkbox" class="checkbox" id="checkbox" />
+      <label for="checkbox" class="label">
+        <svg class="moon" width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 11.5066C3 16.7497 7.25034 21 12.4934 21C16.2209 21 19.4466 18.8518 21 15.7259C12.4934 15.7259 8.27411 11.5066 8.27411 3C5.14821 4.55344 3 7.77915 3 11.5066Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="sun" width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 12L23 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 2V1" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 23V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 20L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 4L19 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 20L5 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 4L5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 12L2 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="ball"></div>
+      </label>
+    </div>
+    <div id="ProgressLoading">
+      <div class="customProgress">
+        <progress id="loadingProgress" value="0" max="100"></progress>
+        <div id="loadingwidth" style="width: 0;"></div>
+        <span>we're fetching your data, DO NOT REFRESH THE PAGE</span>
+      </div>
+      <span id="progressText">0%</span>
+    </div>
+		<div class="site-content">
+		<div id="ry-pg-body" class="col-xs-12 ">
+      <div class="col-xs-12 ry-container">
+        <div class="col-xs-12 ry-content">
+          <div id="brands" class="col-xs-12 brands">
+            <div class="filter-group">
+              <div class="button-wrapper">
+                <a href="javascript:void(0)" data-target="#Contact-Lens-Brand" class="ry-btn ry-btn-primary active" data-folderlocation="_Contact Lens Brand">Contact Lens</a>
+                <a href="javascript:void(0)" data-target="#Brand-Images-Isolated" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images Isolated">Brand with Frame</a>
+                <a href="javascript:void(0)" data-target="#Brand-Images-with-Model" class="ry-btn ry-btn-primary" data-folderlocation="_Brand Images with Model">Brand with Model</a>
+                <a href="javascript:void(0)" data-target="#Frame-Brands" class="ry-btn ry-btn-primary" data-folderlocation="_Frame Brands">Frame Logo</a>
+                <a href="javascript:void(0)" data-target="#Payment-Options" class="ry-btn ry-btn-primary" data-folderlocation="_Payment Options">Payment Logo</a>
+                <a href="javascript:void(0)" data-target="#Insurance" class="ry-btn ry-btn-primary" data-folderlocation="_Insurance">Insurance Logo</a>
+              </div>
+              <div class="search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                </svg>
+                <input name="SearchData" class="search" placeholder="Search Brand Logo Here!">
+              </div>
+            </div>
+            <div class="col-xs-12 brand-container">
+              <div class="col-xs-12 ry-flex">
+                <div class="col-xs-12 col-lg-3 ry-each brand-text">
+                  <div class="ry-text">
+                    <p>You Selected <br>
+                      <b>
+                        <span class="count">0</span> Logos </b> from the list.
+                    </p>
+                    <div onclick="generateZIP()" class="download button-download">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
+                      </svg>Download now
+                    </div>
+                    <a href="javascript:void(0);" class="clear-all-check" style="display: none;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"></path>
+                      </svg> clear all </a>
+                      <a href="javascript:void(0);" class="select-all-check" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
+                            <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+                            <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
+                          </svg> Select all result</a>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-lg-9 ry-each brand-list">
+                  <div id="Contact-Lens-Brand" class="col-xs-12 brand-box-container loaded active" data-folder="_Contact Lens Brand">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Brand-Images-Isolated" class="col-xs-12 brand-box-container loaded animated-wait " data-folder="_Brand Images Isolated">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Brand-Images-with-Model" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Brand Images with Model">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Frame-Brands" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Frame Brands">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                    
+                  </div>
+                  <div id="Payment-Options" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Payment Options">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                  </div>
+                  <div id="Insurance" class="col-xs-12 brand-box-container loaded animated-wait" data-folder="_Insurance">
+                    <div class="button-hidden hidden">
+                      <button type="submit" class="btn btn-primary">Zip them</button>
+                      <div class="progress d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <div class="hidden">
+                      <div class="progress hide" id="progress_bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                      </div>
+                      <p class="hide" id="result"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/js/common.js?jxl1898761698=jxl1898761698"></script>
+    <!-- Script Injections -->
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/dependencies.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/jszip.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/jszip-utils.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/filesaver.js"></script>
+
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <script src="https://admin.roya.com/sites/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/scripts/lazyimages.js"></script>
+    
+    <script>
+        $(function () {
+            $(document).on('click', '.text-copy', function () {
+                var copiedtext = $(this).text();
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(copiedtext)
+                    .then(() => {
+                        $(this).prev(".copied-toast").text("Copied!").show().fadeOut(1200);
+                        setTimeout(() => {
+                            $(this).prev(".copied-toast").text("Copy Image Url");
+                        }, 1500);
+                    })
+                    .catch(() => {
+                        $(this).prev(".copied-toast").text("Copy Image Url").show().fadeOut(1200);
+                    });
+                } else {
+                    $(this).prev(".copied-toast").text("Copy Image Url").show().fadeOut(1200);
+                }
+            });
+
+            $(document).on('mouseenter', '.copy-clip', function() {
+                $(this).find(".copied-toast").show();
+                $(this).parents('.each-brand').find('.brand-image-hover').addClass('svg_active');
+            }).on('mouseleave', '.copy-clip', function() {
+                $(this).find(".copied-toast").hide();
+                $(this).parents('.each-brand').find('.brand-image-hover').removeClass('svg_active');
+            });
+        });
+    </script>
+
+<script>
+  const imageCache = {};
+  const _0x227282=_0x21bc;function _0x27c2(){const _0xfe2681=['kAAAAAAAAA','20hfkSuJ','c2aap','tQ3v2dI_Qp','JwYXDw031p','25085ktyzun','ejmzmw2oth','ATXgJoeCm1','BNQB5IYqkR','gobwmVpDOq','gaDnj91wwt','EYJATipKW-','DF4f9ESaGe','uuhC2ZweSt','tjQwv5Koog','iyXnZDB0ud','AGiXtpyzZw','AYe0iQCdPg','qDbUgEhqQC','pUwFKcLbQH','jlxuVnJmeT','MSD61Y-rix','2J5bHhSTj7','O0nRkcyuox','WgmtqMwVI6','IIHPrkm01S','S4evIii-rj','JK655WTVa6','bDi1ky8Sa6','a2uRSeDqhH','SqldJQ9qjl','I8pTWUQYt-','Qk_BNjcX_q','3oYFDVA','0bq7obz28l','3JQILuDOQS','0Hh6YndBLB','PFCi0DeHFi','azzUG2B4Fr','kn26bwjawD','jbVCCmw-7D','Oio5ShdyI-','nkygU-oPZJ','uHkcKg_et4','-KZBkLv1-c','3xVh0Z18I7','DBDNdMbtGM','KPmQ8TzCcA','gB1D7P8T3V','KJUnSveCJa','6938388DiSQyY','5HUaqRU0Fd','N-6_B9du5H','2ElhiVeHwy','-aKQaLqT95','LzKwpGMUAj','1KMfyF1l2p','QPYtkCPvqQ','FN7YtBw75I','K3Rq_S2rPo','V7tkSiEZPM','277358CHShfm','LfuVEFH7RJ','2veJOLJVRO','p5-VXUEuAl','ZlOg5ZgIsz','835964MyknNW','bAJhd6cAEH','Bo_o9LRRRG','5hEupOXQgO','1ATcecQnU7','r8zmFFeUWv','6QVMtWf','n7fEIdu6Wt','AIes4AE-Oh','65pgwADJug','1450956LVPAcQ','0nC6CfuOBO','5QxqwllRSl','zP1BRsE3S7','IKoNh6eVwT','RK8YUspVHG','AW307lbz-Y','_gptg4WjCf','7Fe2saTXc1','zApo8H9kZS','RfknU5JxN_','vhBBUZOp2T','5bU9gv9LhA','M23wkhcdSm','hzDo_bpU3r','cRSAv2WUlP','JhaJrfg57j','3FfK8HEqp-','khmA47nvp0','yayeFGP8A-','17Nvtc2s9R','9PeoTrzDnE','Z4UOun9kpd','gNmrDR9-WW','CGM9n65RG1','l_88KJw0vx','2484840revaRX','nc2Yp1hDGx','4716GG2Qo9','hOtqPpNb3O','hoqhzdsMBW','oTrO8lNewT','n176ecl28f','8ntS4wCjnp','zmQNBSpwHz','f6X7Ur7SgA','3099313NcMKVh','h1SU_sq6Km','7adTqq2swY','9r_S_onVt-','5kGps2r2Js','TTuytrp_e3','GWt9sYa7KN','0gdIw','IDiXBYAg0N','66iobk6ar1','F63RhYelp7','NnCFRxb8p4','sl.u.AFgxY','T73mJgJQmi','ItVmTyioTu','IaZtxx4dOB','T0aYSLfF9f','xQzsMPo8dG','XK9m-lpkqB','iuwPDtewvS','2MAH2De9FE','g4yn3OwZt9','zz52FXmseU','INn0R0NeoL','K7bRX01r3M','krhYguwdM7','j05lX2QDi8','3WZT0DQX49','afKJyEJ6jp','hMGA','TEo_07AY9W','Gzodn91yNq','CKju5TO-fC','oMeTVIFDoP','R2ipmLbhqE','yt0yLHRVuZ','DMAlVl46X1','wKfqdHGhuW','5fSR8V40pJ','FsOGKUX79U','tMo71LEB2z','Z497ZXPWx_','HI6ANpSnC8','Q-jUTv4Xl4','a0veh','TUXTl92P5c','JR0bY8SjdX','QUYBmAWUtP','QsAGag41tb'];_0x27c2=function(){return _0xfe2681;};return _0x27c2();}function _0x21bc(_0x1cb1b0,_0x516f26){const _0x25ef40=_0x27c2();return _0x21bc=function(_0x5ea4e0,_0x2a7d23){_0x5ea4e0=_0x5ea4e0-(-0x1e41+0x1ca4+0x35c);let _0x3622b3=_0x25ef40[_0x5ea4e0];return _0x3622b3;},_0x21bc(_0x1cb1b0,_0x516f26);}(function(_0x441052,_0x43c7c0){const _0x43d891=_0x21bc,_0x10b4bd=_0x441052();while(!![]){try{const _0x3f87c3=-parseInt(_0x43d891(0x1cd))/(0x1*-0xb44+0x1412+-0x1*0x8cd)+-parseInt(_0x43d891(0x1dc))/(0x17a7+-0x2*-0xb85+-0x2eaf)+-parseInt(_0x43d891(0x252))/(0x132c+0x1*0x1b9b+0x1*-0x2ec4)*(-parseInt(_0x43d891(0x1d2))/(-0x1*0x1219+-0x11c*0xb+0x1e51))+parseInt(_0x43d891(0x236))/(-0x17f*-0x1a+0x2ce*0xa+-0x3*0x164f)*(-parseInt(_0x43d891(0x1d8))/(-0x1e02+-0x1f85*0x1+0x3d8d))+-parseInt(_0x43d891(0x200))/(-0x1*0x215a+-0x5*0x614+-0x19*-0x28d)+parseInt(_0x43d891(0x1f6))/(0x23af+-0x19*0x175+0xc6)+-parseInt(_0x43d891(0x1c2))/(-0x67*-0x46+-0x1bab+-0x76)*(-parseInt(_0x43d891(0x232))/(0x9da*0x1+-0xc9d+0x2cd));if(_0x3f87c3===_0x43c7c0)break;else _0x10b4bd['push'](_0x10b4bd['shift']());}catch(_0x5e9926){_0x10b4bd['push'](_0x10b4bd['shift']());}}}(_0x27c2,-0x51312+-0x568e9+0x13ce1b));const CLIENT_ID=_0x227282(0x209)+_0x227282(0x233),CLIENT_SECRET=_0x227282(0x253)+_0x227282(0x22c),REFRESH_TOKEN=_0x227282(0x222)+_0x227282(0x231)+_0x227282(0x1e2)+_0x227282(0x210)+_0x227282(0x23f)+_0x227282(0x1cb)+_0x227282(0x21d),TOKEN_STORAGE_KEY=_0x227282(0x20c)+_0x227282(0x1d0)+_0x227282(0x23b)+_0x227282(0x20b)+_0x227282(0x245)+_0x227282(0x206)+_0x227282(0x1df)+_0x227282(0x1f9)+_0x227282(0x241)+_0x227282(0x20e)+_0x227282(0x20a)+_0x227282(0x250)+_0x227282(0x1e3)+_0x227282(0x24a)+_0x227282(0x246)+_0x227282(0x20d)+_0x227282(0x20f)+_0x227282(0x1cf)+_0x227282(0x1fa)+_0x227282(0x1d5)+_0x227282(0x201)+_0x227282(0x1f3)+_0x227282(0x227)+_0x227282(0x1c1)+_0x227282(0x1d6)+_0x227282(0x228)+_0x227282(0x216)+_0x227282(0x22f)+_0x227282(0x1f0)+_0x227282(0x242)+_0x227282(0x259)+_0x227282(0x215)+_0x227282(0x1ec)+_0x227282(0x1ca)+_0x227282(0x25f)+_0x227282(0x22a)+_0x227282(0x1d3)+_0x227282(0x1ed)+_0x227282(0x23c)+_0x227282(0x1e4)+_0x227282(0x237)+_0x227282(0x1e5)+_0x227282(0x22d)+_0x227282(0x256)+_0x227282(0x1e7)+_0x227282(0x208)+_0x227282(0x225)+_0x227282(0x21c)+_0x227282(0x1bf)+_0x227282(0x24d)+_0x227282(0x24b)+_0x227282(0x25b)+_0x227282(0x239)+_0x227282(0x244)+_0x227282(0x1ee)+_0x227282(0x218)+_0x227282(0x1c4)+_0x227282(0x212)+_0x227282(0x254)+_0x227282(0x234)+_0x227282(0x1fe)+_0x227282(0x1f7)+_0x227282(0x24f)+_0x227282(0x1fb)+_0x227282(0x248)+_0x227282(0x223)+_0x227282(0x1ce)+_0x227282(0x21a)+_0x227282(0x1c3)+_0x227282(0x1c7)+_0x227282(0x25a)+_0x227282(0x251)+_0x227282(0x238)+_0x227282(0x1eb)+_0x227282(0x25d)+_0x227282(0x21f)+_0x227282(0x226)+_0x227282(0x224)+_0x227282(0x1dd)+_0x227282(0x243)+_0x227282(0x23a)+_0x227282(0x22e)+_0x227282(0x1de)+_0x227282(0x211)+_0x227282(0x1ff)+_0x227282(0x1c0)+_0x227282(0x25c)+_0x227282(0x213)+_0x227282(0x257)+_0x227282(0x230)+_0x227282(0x23d)+_0x227282(0x1c5)+_0x227282(0x219)+_0x227282(0x249)+_0x227282(0x221)+_0x227282(0x21b)+_0x227282(0x1ef)+_0x227282(0x1e9)+_0x227282(0x204)+_0x227282(0x1d9)+(_0x227282(0x258)+_0x227282(0x25e)+_0x227282(0x1c9)+_0x227282(0x1d7)+_0x227282(0x1c6)+_0x227282(0x1ea)+_0x227282(0x1e1)+_0x227282(0x1d1)+_0x227282(0x24e)+_0x227282(0x1d4)+_0x227282(0x22b)+_0x227282(0x205)+_0x227282(0x1f1)+_0x227282(0x217)+_0x227282(0x203)+_0x227282(0x1f5)+_0x227282(0x1f8)+_0x227282(0x235)+_0x227282(0x1cc)+_0x227282(0x247)+_0x227282(0x1c8)+_0x227282(0x1f4)+_0x227282(0x202)+_0x227282(0x255)+_0x227282(0x1fc)+_0x227282(0x1f2)+_0x227282(0x1db)+_0x227282(0x1fd)+_0x227282(0x240)+_0x227282(0x220)+_0x227282(0x1da)+_0x227282(0x21e)+_0x227282(0x1e8)+_0x227282(0x214)+_0x227282(0x24c)+_0x227282(0x229)+_0x227282(0x1e6)+_0x227282(0x1e0)+_0x227282(0x23e)+_0x227282(0x207));
+
+  async function getAccessToken() {
+    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+    if (storedToken) {
+        return storedToken;
+    }
+
+    const url = 'https://api.dropbox.com/oauth2/token';
+    const params = new URLSearchParams();
+    params.append('grant_type', 'refresh_token');
+    params.append('refresh_token', REFRESH_TOKEN);
+    params.append('client_id', CLIENT_ID);
+    params.append('client_secret', CLIENT_SECRET);
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to refresh token');
+        }
+
+        const data = await response.json();
+        localStorage.setItem(TOKEN_STORAGE_KEY, data.access_token);
+        return data.access_token;
+    } catch (error) {
+        console.error('Error refreshing token:', error);
+        return null;
+    }
+}
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function fetchFilesWithPagination(folderPath) {
+    let hasMore = true;
+    let cursor = null;
+    let allFiles = [];
+
+    try {
+        const ACCESS_TOKEN = await getAccessToken();
+
+        while (hasMore) {
+            const response = await fetch(`https://api.dropboxapi.com/2/files/list_folder${cursor ? '/continue' : ''}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${ACCESS_TOKEN}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cursor ? { cursor } : { path: folderPath, limit: 200 }),
+            });
+
+            if (!response.ok) {
+                if (response.status === 401) {  
+                    console.warn('Access token expired, refreshing token...');
+                    localStorage.removeItem(TOKEN_STORAGE_KEY);
+                    return fetchFilesWithPagination(folderPath);
+                }
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            allFiles = allFiles.concat(data.entries);
+            hasMore = data.has_more;
+            cursor = data.cursor;
+            await delay(100);
+        }
+
+        return allFiles;
+    } catch (error) {
+        console.error('Error fetching files with pagination:', error);
+        throw error;
+    }
+}
+
+// Helper: Fetch temporary link with retry logic for rate limits/failures
+async function fetchTempLinkWithRetry(file, retries = 3) {
+  const ACCESS_TOKEN = await getAccessToken();
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const response = await fetch('https://api.dropboxapi.com/2/files/get_temporary_link', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${ACCESS_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ path: file.path_display }),
+      });
+
+      if (response.status === 429) {
+        const retryAfter = (parseInt(response.headers.get('Retry-After')) || 1) * 1000;
+        await delay(retryAfter + (attempt * 500));
+        continue;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const tempLinkData = await response.json();
+      return { ...file, url: tempLinkData.link };
+    } catch (err) {
+      if (attempt === retries - 1) {
+        console.error(`Failed to fetch link for ${file.name}:`, err);
+        return null;
+      }
+      await delay(500 * Math.pow(2, attempt)); // Exponential backoff
+    }
+  }
+  return null;
+}
+
+// Improved concurrent fetching in batches
+const fetchTemporaryLinks = async (files, batchSize = 25) => {
+  let allFilesWithUrls = [];
+  for (let i = 0; i < files.length; i += batchSize) {
+    const batch = files.slice(i, i + batchSize);
+    const batchResults = await Promise.all(
+      batch.map(file => fetchTempLinkWithRetry(file))
+    );
+    allFilesWithUrls.push(...batchResults.filter(Boolean));
+  }
+  return allFilesWithUrls;
+};
+
+const renderFiles = (filesWithUrls, targetDiv) => {
+  const fragment = document.createDocumentFragment();
+
+  filesWithUrls.forEach(file => {
+    const divContent = document.createElement('div');
+    divContent.classList.add('each-brand');
+    divContent.innerHTML = `
+        <div class="brand-image-hover">
+            <img class="lazyload" src="${file.url}" data-img="${file.url}">
+        </div>
+        <div class="brand-form">
+            <input type="checkbox" name="brand" value="${file.name}" data-url="${file.url}">
+            <input type="hidden" class="data-storage" value="${file.url}" data-name="${file.name}" data-logo="${file.url}">
+            <p class="name">${file.name}</p>
+            <div class="copy-clip" data-link="${file.url}">
+                <div class="copied-toast">Copy Image Url</div>
+                <span class="text-copy">${file.url}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"></path><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"></path></svg>
+            </div>
+        </div>`;
+    fragment.appendChild(divContent);
+  });
+
+  targetDiv.innerHTML = '';
+  targetDiv.appendChild(fragment);
+};
+
+const loadAllImages = async () => {
+  try {
+    const rootFolderPath = '/_Raw Logo';
+    const folders = await fetchFilesWithPagination(rootFolderPath);
+    const imageFolders = folders.filter(entry => entry['.tag'] === 'folder');
+
+    const progressBar = document.getElementById('loadingProgress');
+    const progressText = document.getElementById('progressText');
+    const brandDefault = document.getElementById('brandDefault');
+    const loadWidth = document.getElementById('loadingwidth');
+
+    let completedFolders = 0;
+
+    // Run folder fetching concurrently
+    await Promise.all(imageFolders.map(async (folder) => {
+      const targetDiv = document.querySelector(`div[data-folder="${folder.name}"]`);
+      if (!targetDiv) return;
+
+      const allFiles = await fetchFilesWithPagination(folder.path_display);
+      const imageFiles = allFiles.filter(entry => entry['.tag'] === 'file' && entry.name.match(/\.(jpg|jpeg|png|gif)$/i));
+      const filesWithUrls = await fetchTemporaryLinks(imageFiles);
+
+      renderFiles(filesWithUrls, targetDiv);
+
+      completedFolders++;
+      const progress = Math.round((completedFolders / imageFolders.length) * 100);
+      
+      if (progressBar) progressBar.value = progress;
+      if (progressText) progressText.textContent = `${progress}%`;
+      if (loadWidth) loadWidth.style.width = `${progress}%`;
+
+      if (brandDefault) {
+        if (progress > 1 && progress <= 20) brandDefault.className = 'progress-20';
+        else if (progress > 20 && progress <= 40) brandDefault.className = 'progress-40';
+        else if (progress > 40 && progress <= 60) brandDefault.className = 'progress-60';
+        else if (progress > 60 && progress <= 80) brandDefault.className = 'progress-80';
+        else if (progress > 80) brandDefault.className = 'progress-90';
+      }
+    }));
+
+    processBrands();
+  } catch (error) {
+    console.error('Error loading images:', error);
+  }
+};
+
+const processBrands = () => {
+  const removeNumberPrefixAndCapitalize = (text) => {
+      let cleanedText = text.replace(/^\d+[-_]?/, '');
+      return cleanedText.charAt(0).toUpperCase() + cleanedText.slice(1);
+  };
+
+  document.querySelectorAll('.brand-box-container .each-brand').forEach(brandElement => {
+      const brandTextElement = brandElement.querySelector('p');
+      const brandCheckbox = brandElement.querySelector('input[type="checkbox"]');
+      const cleanedText = removeNumberPrefixAndCapitalize(brandTextElement.textContent);
+      const cleanedTextName = removeNumberPrefixAndCapitalize(brandCheckbox.value);
+
+      brandTextElement.textContent = cleanedText;
+      brandCheckbox.value = cleanedTextName;
+
+      const letter = cleanedText.charAt(0);
+      const parentElement = brandElement.parentElement;
+
+      if (!parentElement.querySelector(`[data-letter="${letter}"]`)) {
+          const brandLetterGroup = document.createElement('div');
+          brandLetterGroup.setAttribute('data-count', letter);
+          brandLetterGroup.className = 'brand-letter-group';
+          brandLetterGroup.innerHTML = `<span class="headline-letter">${letter}</span><ul class="list" data-letter="${letter}"></ul>`;
+          parentElement.appendChild(brandLetterGroup);
+
+          const groups = Array.from(parentElement.querySelectorAll('.brand-letter-group'));
+          groups.sort((a, b) => a.dataset.count.localeCompare(b.dataset.count));
+          groups.forEach(group => parentElement.appendChild(group));
+      }
+
+      const letterList = parentElement.querySelector(`[data-letter="${letter}"]`);
+      letterList.appendChild(brandElement);
+  });
+
+  document.querySelectorAll('.brand-box-container .list .each-brand').forEach(brandElement => {
+      const listItem = document.createElement('li');
+      brandElement.parentNode.insertBefore(listItem, brandElement);
+      listItem.appendChild(brandElement);
+  });
+
+  document.querySelectorAll(".copied-toast").forEach(toast => toast.style.display = 'none');
+
+  initIsotope();
+
+  document.querySelectorAll('.brand-box-container input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+  document.querySelector('.clear-all-check').style.display = 'none';
+  document.querySelector('.select-all-check').style.display = 'none';
+  document.querySelector('.brand-container .ry-flex .brand-text .count').textContent = '0';
+  document.querySelector('.download.button-download').classList.add('disabled');
+  
+  setTimeout(function () {
+    document.body.classList.add('activated');
+    document.getElementById('ProgressLoading').style.display = 'none'; 
+  }, 1000);
+
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadAllImages(); // Load Images
+});
+
+document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(button => {
+  button.addEventListener('click', async () => {
+      
+      const target = button.getAttribute('data-target');
+      const targetDiv = document.querySelector(target);
+
+      document.querySelectorAll('.button-wrapper .ry-btn-primary').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      document.querySelectorAll('.brand-box-container').forEach(container => container.classList.remove('active'));
+      targetDiv.classList.add('active');
+
+      targetDiv.classList.remove('animated-wait');
+      
+      $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+      $('.clear-all-check').hide();
+      $('.select-all-check').hide();
+      $('.brand-container .ry-flex .brand-text .count').text('0');
+      $('.download.button-download').addClass('disabled');
+
+      links = [];
+
+      initIsotope(); 
+  });
+});    
+</script>
+
+  <script>
+  var qsRegex;
+  var $grid;
+
+    function initIsotope() {
+    $grid = $('.brand-letter-group .list').isotope({
+        itemSelector: 'li',
+        layoutMode: 'fitRows',
+        getSortData: {
+            name: function (itemElem) {
+                return $(itemElem).find('.name').text().toLowerCase();
+            }
+        },
+        sortBy: 'name',
+        sortAscending: true,
+        filter: function () {
+            return qsRegex ? $(this).text().match(qsRegex) : true;
+        }
+    });
+    }
+
+    function updateFilter() {
+    var searchVal = $('.search').val().toLowerCase().trim();
+    
+    if (searchVal) {
+        var terms = searchVal.split(/\s*,\s*/); 
+        qsRegex = new RegExp(terms.map(term => `(${term})`).join('|'), 'gi'); 
+    } else {
+        qsRegex = null; 
+    }
+
+    $grid.isotope();
+
+    setTimeout(function () {
+        
+        $('.brand-letter-group').each(function () {
+            var $this = $(this);
+            var visibleItems = $this.find('ul').isotope('getFilteredItemElements').length;
+            $this.attr('data-count', visibleItems);
+        });
+  
+        $('.brand-box-container.active .brand-letter-group').each(function () {
+    var allZero = true;
+
+    $('.brand-box-container.active .brand-letter-group').each(function () {
+        var $this = $(this);
+        var dataCount = parseInt($this.attr('data-count'), 10);
+
+        if (dataCount !== 0) {
+            allZero = false; 
+            return false; 
+        }
+    });
+
+    if (allZero) {
+        $('.select-all-check').hide();
+    } else {
+        $('.select-all-check').show();
+    }
+});
+
+        setTimeout(function () {
+            $grid.isotope('layout');
+        }, 100);
+    }, 150);
+}
+
+  function debounce(fn, threshold) {
+    var timeout;
+    threshold = threshold || 100;
+    return function debounced() {
+      clearTimeout(timeout);
+      var args = arguments;
+      var _this = this;
+      function delayed() {
+        fn.apply(_this, args);
+      }
+      timeout = setTimeout(delayed, threshold);
+    };
+  }
+
+  $(document).ready(function () {
+    // Search input
+    $('.search').on('keyup', debounce(updateFilter, 100));
+
+    // MutationObserver 
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.addedNodes.length) {
+          $grid.isotope('reloadItems').isotope();
+        }
+      });
+    });
+
+    var targetNode = document.querySelector('.brand-letter-group');
+    if (targetNode) {
+      observer.observe(targetNode, { childList: true, subtree: true });
+    }
+  });
+
+  var links = [];
+  $(function () { 
+    $('.brand-box-container .each-brand').hover(function() {
+      var img__hover = $(this).find('input[type="checkbox"]').attr('data-url');
+      $(this).find('.brand-image-hover img').attr('src', img__hover);
+    });
+
+    $('.download.button-download').addClass('disabled');
+    $(document).on('click', '.brand-box-container input[type="checkbox"]', function () {
+      if ($(this).is(':checked')) {
+        $(this).removeClass().addClass('thumbChecked');
+        links.push({
+          url: $(this).data('url'),
+          value: $(this).val()
+        });
+        if (links.length !== 0) {
+            $('.download').removeClass('download-disable');
+        } else {
+            $('.download').addClass('download-disable');
+        }
+      } else {
+        $(this).removeClass().addClass('thumb');
+
+        var itemtoRemove = $(this).attr('data-url');
+        links.splice($.inArray(itemtoRemove, links), 1);
+
+        if (links.length == 0) {
+            $('.download').addClass('download-disable');
+        }
+      }
+
+      var countData = links.length;
+
+      $('.brand-container .ry-flex .brand-text .count').text(countData);
+        if (countData >= 1) { 
+            $('.clear-all-check').show();
+            $('.download.button-download').removeClass('disabled');
+        } else {
+            $('.clear-all-check').hide();
+            $('.download.button-download').addClass('disabled');
+        }
+      });
+
+      $('.clear-all-check').click(function() {
+          $('.brand-box-container input[type="checkbox"]').prop('checked', false);
+          $('.clear-all-check').hide();
+          $('.brand-container .ry-flex .brand-text .count').text('0');
+          $('.download.button-download').addClass('disabled');
+          links = [];
+      });
+
+      $('.select-all-check').click(function() {
+          $('.brand-box-container.active input[type="checkbox"]:visible').click();
+          $('.brand-box-container.active input[type="checkbox"]:visible').prop('checked', true);
+          $('.clear-all-check').show();
+          $('.download.button-download').removeClass('disabled');
+      });
+      
+    $( window ).scroll(function() {
+      var height = $(window).scrollTop();
+      if(height  > 300) {
+        $('.brands .filter-group').addClass('fixed');
+        $('.brand-container').addClass('fixed');
+
+      } else {
+        $('.brands .filter-group').removeClass('fixed');
+        $('.brand-container').removeClass('fixed');
+      }
+    });
+  });
+
+  function generateZIP() {
+    var zip = new JSZip();
+    var count = 0;
+    var zipFilename = "Pictures.zip";
+
+    links.forEach(function (item, index) {
+        var url = item.url;
+        var value = item.value; 
+        var filename = value;
+
+        JSZipUtils.getBinaryContent(url, function (err, data) {
+            if (err) {
+                console.error("Error downloading:", url, err);
+                return;
+            }
+
+            zip.file(filename, data, { binary: true });
+            count++;  
+            if (count === links.length) {
+                zip.generateAsync({ type: 'blob' }).then(function (content) {
+                    saveAs(content, zipFilename);
+                });
+            }
+        });
+    });
+  }
+
+  const btn = document.querySelector(".theme-switch input");
+  const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+  btn.addEventListener("click", () => {
+    if (prefersDarkScheme.matches) {
+      document.documentElement.classList.toggle("light");
+    } else {
+      document.documentElement.classList.toggle("dark");
+    }
+  });
+
+</script>
+	</body>
+</html>
