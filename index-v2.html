@@ -728,7 +728,7 @@ const renderFiles = (filesWithUrls, targetDiv) => {
             <img class="lazyload" src="${file.url}" data-img="${file.url}">
         </div>
         <div class="brand-form">
-            <input type="checkbox" name="brand" value="${file.name}" data-url="${file.url}">
+            <input type="checkbox" name="brand" value="${file.name}" data-url="${file.url}" data-path="${file.path_display}">
             <input type="hidden" class="data-storage" value="${file.url}" data-name="${file.name}" data-logo="${file.url}">
             <p class="name">${file.name}</p>
             <div class="copy-clip" data-link="${file.url}">
@@ -979,16 +979,18 @@ $(function () {
     $('.download.button-download').addClass('disabled');
     $(document).on('click', '.brand-box-container input[type="checkbox"]', function () {
       var itemUrl = $(this).data('url');
+      var itemPath = $(this).data('path');
+
       if ($(this).is(':checked')) {
         $(this).removeClass().addClass('thumbChecked');
         links.push({
           url: itemUrl,
+          path: itemPath,
           value: $(this).val()
         });
         $('.download').removeClass('download-disable');
       } else {
         $(this).removeClass().addClass('thumb');
-        // Fixed: Correctly filter out unchecked item from object array
         links = links.filter(item => item.url !== itemUrl);
 
         if (links.length === 0) {
@@ -1035,17 +1037,33 @@ $(function () {
     });
 });
 
-// Helper: Download a single image with automatic retries and exponential backoff
-async function fetchImageBlobWithRetry(url, maxRetries = 3) {
+// Helper: Download a single image via Dropbox Content API with automatic retries and exponential backoff
+async function fetchDropboxBlobWithRetry(filePath, maxRetries = 3) {
+  const ACCESS_TOKEN = await getAccessToken();
+
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      const response = await fetch(url);
+      const response = await fetch('https://content.dropboxapi.com/2/files/download', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${ACCESS_TOKEN}`,
+          'Dropbox-API-Arg': JSON.stringify({ path: filePath })
+        }
+      });
+
       if (response.status === 429) {
         const retryAfter = (parseInt(response.headers.get('Retry-After')) || 1) * 1000;
         await delay(retryAfter + (attempt * 500));
         continue;
       }
+
+      if (response.status === 401) {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        return fetchDropboxBlobWithRetry(filePath, maxRetries);
+      }
+
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
       return await response.arrayBuffer();
     } catch (err) {
       if (attempt === maxRetries - 1) throw err;
@@ -1054,7 +1072,7 @@ async function fetchImageBlobWithRetry(url, maxRetries = 3) {
   }
 }
 
-// Helper: Execute array of async functions with strict concurrency limit (10-15 workers)
+// Helper: Execute array of async tasks with strict concurrency limit
 async function runConcurrentTasks(items, limit, taskFn) {
   const results = new Array(items.length);
   let index = 0;
@@ -1070,7 +1088,7 @@ async function runConcurrentTasks(items, limit, taskFn) {
   return results;
 }
 
-// Optimized, High-Speed Concurrent ZIP Downloader
+// Optimized, CORS-Safe, High-Speed Concurrent ZIP Downloader
 async function generateZIP() {
   if (!links || links.length === 0) return;
 
@@ -1079,23 +1097,21 @@ async function generateZIP() {
   const total = links.length;
   let completed = 0;
 
-  // Real-Time Progress Bar UI binding
   const $downloadBtn = $('.download.button-download');
   const originalBtnText = $downloadBtn.text();
 
   const updateProgress = (text) => {
     $downloadBtn.text(text);
-    console.log(text);
   };
 
   updateProgress(`Downloading 0/${total}`);
 
-  const CONCURRENCY_LIMIT = 15; // Limit to 15 concurrent downloads to avoid rate limits
+  const CONCURRENCY_LIMIT = 12;
 
   try {
     const downloadedFiles = await runConcurrentTasks(links, CONCURRENCY_LIMIT, async (item) => {
       try {
-        const buffer = await fetchImageBlobWithRetry(item.url);
+        const buffer = await fetchDropboxBlobWithRetry(item.path || item.url);
         completed++;
         updateProgress(`Downloading ${completed}/${total}`);
         return { filename: item.value, buffer };
@@ -1107,7 +1123,6 @@ async function generateZIP() {
       }
     });
 
-    // Populate ZIP archive
     downloadedFiles.forEach(file => {
       if (file && file.buffer) {
         zip.file(file.filename, file.buffer, { binary: true });
@@ -1116,7 +1131,6 @@ async function generateZIP() {
 
     updateProgress('Building ZIP...');
 
-    // 3-10x Speed boost: Disabling DEFLATE compression for pre-compressed images
     const content = await zip.generateAsync({ 
       type: 'blob',
       compression: 'STORE' 
