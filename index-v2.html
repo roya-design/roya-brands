@@ -68,35 +68,37 @@
         }
 
         body:not(.activated):after {
-            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/waitgif.gif);
-            width: 200px;
-            height: 153px;
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/peachcat_cat.gif);
+            width: 326px;
+            height: 279px;
             transition: .3s;
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
         }
 
         body.progress-20:not(.activated):after {
-            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_25.gif);
-            height: 200px;
-            width: 188px;
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_cat.gif);
+            height: 339px;
+            width: 281px;
         }
 
-        body.progress-40:not(.activated):after {
-            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cat_rolling.gif);
-            width: 200px;
-            height: 200px;
-        }
-        body.progress-60:not(.activated):after {
-            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cat_sleeping.gif);
-            width: 250px;
-            height: 227px;
+        body.progress-40:not(.activated):after,
+		body.progress-50:not(.activated):after,
+		body.progress-60:not(.activated):after{
+            background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_cat.gif);
+            height: 339px;
+            width: 281px;
         }
 
-        body.progress-80:not(.activated):after {
+        body.progress-80:not(.activated):after,
+		body.progress-70:not(.activated):after{
           background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
             width: 250px;
             height: 220px;
             background-size: cover;
         }
+		
         body.progress-90:not(.activated):after {
             background-image: url(https://s3.amazonaws.com/static.organiclead.com/Site-b0ac8594-8528-44a1-b5eb-8d504e44dacb/cute_dancing.gif);
             width: 250px;
@@ -108,6 +110,13 @@
         .brand-box-container.animated-wait:after {
             display: none;
         }
+		
+		.brand-box-container ul .brand-form input[type="checkbox"] {
+		    z-index: 2;
+		}
+		.brand-box-container ul .brand-form .copy-clip {
+    z-index: 3;
+}
         .customProgress {
             max-width: 320px;
             width: 100%;
